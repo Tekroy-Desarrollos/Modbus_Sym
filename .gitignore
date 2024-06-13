@@ -1,0 +1,5 @@
+# Ignorar todos los archivos .py en la carpeta Src
+/Src/*.py
+
+# Incluir el archivo readme
+/readme
