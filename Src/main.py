@@ -1,7 +1,8 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
-from Serial_Client import SerialClient
+from Serial_Client import SerialClient  # Asegúrate de tener SerialClient definido correctamente
 import serial.tools.list_ports as list_ports 
+import sys
 import glob
 
 class App:
@@ -31,26 +32,15 @@ class App:
 
         self.connect_button = ttk.Button(root, text="Conectar", command=self.connect)
         self.connect_button.grid(row=3, column=0, columnspan=2, padx=10, pady=10, sticky='ew')
+        
+        #boton
+        self.button_Init_Test = ttk.Button(root, text="Iniciar Prueba", command=self.init_test)
+        self.button_Init_Test.grid(row=4, column=0, columnspan=2, padx=10, pady=10, sticky='ew')
 
-        self.address_label = ttk.Label(root, text="Dirección:")
-        self.address_label.grid(row=4, column=0, padx=10, pady=5, sticky='w')
-
-        self.address_entry = ttk.Entry(root)
-        self.address_entry.grid(row=4, column=1, padx=10, pady=5, sticky='ew')
-
-        self.count_label = ttk.Label(root, text="Cantidad:")
-        self.count_label.grid(row=5, column=0, padx=10, pady=5, sticky='w')
-
-        self.count_entry = ttk.Entry(root)
-        self.count_entry.grid(row=5, column=1, padx=10, pady=5, sticky='ew')
-
-        self.read_button = ttk.Button(root, text="Leer Registro", command=self.read_register)
-        self.read_button.grid(row=6, column=0, columnspan=2, padx=10, pady=10, sticky='ew')
-
+        
         # Función para actualizar baudrate cuando se seleccione uno nuevo
         self.baudrate_combobox.bind("<<ComboboxSelected>>", self.update_baudrate)
-
-        # Centrar la ventana en la pantalla
+        
         self.center_window()
 
     def center_window(self):
@@ -64,16 +54,20 @@ class App:
     def scan_ports(self):
         self.tty_ports = []
 
-        # Buscar puertos serie en Windows y sistemas Unix (Linux, macOS)
-        if tk.Tk().tk.call('tk', 'windowingsystem') == 'win32':
+        # Verificar el sistema operativo
+        if sys.platform.startswith('win'):
+            print("Windows")
             # Windows
+            import serial.tools.list_ports as list_ports
             ports = list_ports.comports()
-            for port, desc, hwid in sorted(ports):
-                self.tty_ports.append(port)
-        else:
-            # Unix (Linux, macOS)
-            import glob
+            self.tty_ports = [port.device for port in ports]
+        elif sys.platform.startswith('linux') or sys.platform.startswith('darwin'):
+            print("Linux o macOS")
+            # Linux o macOS
             self.tty_ports = glob.glob('/dev/ttyUSB*') + glob.glob('/dev/ttyACM*')
+        else:
+            print("Sistema operativo no soportado")
+            return
 
         # Imprimir la lista de dispositivos encontrados (solo para propósitos de prueba)
         if len(self.tty_ports) == 0:
@@ -96,24 +90,16 @@ class App:
         except Exception as e:
             messagebox.showerror("Error de Conexión", str(e))
 
-    def read_register(self):
-        if not self.serial_client:
-            messagebox.showerror("Error", "No hay conexión Modbus")
-            return
-
-        address = int(self.address_entry.get())
-        count = int(self.count_entry.get())
-        try:
-            response = self.serial_client.read_register(address, count)
-            data = ' '.join(format(x, '02x') for x in response)
-            messagebox.showinfo("Respuesta", f"Datos: {data}")
-        except Exception as e:
-            messagebox.showerror("Error", str(e))
-
     def update_baudrate(self, event):
         if self.serial_client:
             baudrate = int(self.baudrate_combobox.get())
             self.serial_client.set_baudrate(baudrate)
+    def init_test(self):
+        print("Iniciando Prueba")
+        # Aquí puedes llamar a la función que inicia tu prueba
+        # Por ejemplo, si tienes una función llamada "run_test" en Serial_Client.py
+        # solo debes hacer:
+        
 
 if __name__ == "__main__":
     root = tk.Tk()
