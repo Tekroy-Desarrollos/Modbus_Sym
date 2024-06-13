@@ -14,6 +14,11 @@ class SerialClient:
         if self.serial_connection and self.serial_connection.is_open:
             self.serial_connection.close()
 
+    def set_baudrate(self, baudrate):
+        self.baudrate = baudrate
+        if self.serial_connection and self.serial_connection.is_open:
+            self.serial_connection.baudrate = baudrate
+
     def calculate_crc(self, data):
         crc = 0xFFFF
         for pos in data:
