@@ -1,8 +1,1 @@
-# Ignorar todos los archivos .py en la carpeta Src, excepto los de cache de python
-# Ignorar todos los archivos .py en la carpeta Src, excepto los de cache de python
-/Src/*.py
-!/Src/__pycache__/
-
-
-# Incluir el archivo readme
-/readme
+__pycache__/

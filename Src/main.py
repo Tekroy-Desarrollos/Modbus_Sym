@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk, messagebox, filedialog
 from Serial_Client import SerialClient  # Asegúrate de tener SerialClient definido correctamente
+from Reader_Json import ReaderJson 
 import serial.tools.list_ports as list_ports 
 import sys
 import glob
@@ -13,11 +14,14 @@ class App:
         # Aplicar un tema moderno
         ttk.Style().theme_use('clam')
         
+        # Inicializar el lector de JSON con la ruta del archivo aún no especificada
+        self.reader = ReaderJson()
+
         #Variables de uso general
         self.serial_client = None
         self.File_path = None
         
-        # Crear la interfaz gráfica del selector de puertops
+        # Crear la interfaz gráfica del selector de puerto
         self.port_label = ttk.Label(root, text="Puerto:")
         self.port_label.grid(row=0, column=0, padx=10, pady=5, sticky='w')
         self.port_combobox = ttk.Combobox(root)
@@ -38,19 +42,16 @@ class App:
         self.connect_button = ttk.Button(root, text="Conectar", command=self.connect)
         self.connect_button.grid(row=3, column=0, columnspan=2, padx=10, pady=10, sticky='ew')
         
-        # Boton para seleccionar archivo
+        # Botón para seleccionar archivo
         self.Seleccionar_Archivo = ttk.Button(root, text="Seleccionar Archivo", command=self.open_file)
         self.Seleccionar_Archivo.grid(row=4, column=0, columnspan=2, padx=10, pady=10, sticky='ew')
         
-        # Boton para iniciar la prueba
+        # Botón para iniciar la prueba
         self.button_Init_Test = ttk.Button(root, text="Iniciar Prueba", command=self.init_test)
         self.button_Init_Test.grid(row=5, column=0, columnspan=2, padx=10, pady=10, sticky='ew')
 
         # Función para actualizar baudrate cuando se seleccione uno nuevo
         self.baudrate_combobox.bind("<<ComboboxSelected>>", self.update_baudrate)
-        
-        
-        
         
         self.center_window()
 
@@ -69,13 +70,10 @@ class App:
 
         # Verificar el sistema operativo
         if sys.platform.startswith('win'):
-            print("Windows")
             # Windows
-            import serial.tools.list_ports as list_ports
             ports = list_ports.comports()
             self.tty_ports = [port.device for port in ports]
         elif sys.platform.startswith('linux') or sys.platform.startswith('darwin'):
-            print("Linux o macOS")
             # Linux o macOS
             self.tty_ports = glob.glob('/dev/ttyUSB*') + glob.glob('/dev/ttyACM*')
         else:
@@ -112,16 +110,22 @@ class App:
         
     # Función para iniciar la prueba
     def init_test(self):
-        print("Iniciando Prueba")
-        # Aquí puedes llamar a la función que inicia tu prueba
-        # Por ejemplo, si tienes una función llamada "run_test" en Serial_Client.py
-        # solo debes hacer:
-    
+        if self.File_path:
+            # Aquí puedes llamar a la función que inicia tu prueba
+            # Por ejemplo, si tienes una función llamada "run_test" en Serial_Client.py
+            # solo debes hacer:
+            print("Iniciando Prueba")
+            
+            self.reader.set_file_path(self.File_path)
+            self.reader.read_json()
+            # self.serial_client.run_test()
+        else:
+            messagebox.showwarning("Advertencia", "Por favor, selecciona un archivo antes de iniciar la prueba.")
+
     # Función para abrir un archivo
     def open_file(self):
         self.File_path = filedialog.askopenfilename()
-        print(self.baudrate_comboboxfile_path)
-        # self.serial_client.send_file(file_path)
+        print(self.File_path)  # Imprime la ruta del archivo seleccionado
 
 if __name__ == "__main__":
     root = tk.Tk()

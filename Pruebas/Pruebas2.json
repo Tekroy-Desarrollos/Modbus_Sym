@@ -1,0 +1,11 @@
+{
+    "Pruebas":[
+    {
+        "Adress": "0x01",
+        "Funcion Code": "0x01",
+        "Direccion_Inicial": "0x0000",
+        "Cantidad_De_Registros_A_Leer": "0x01",
+        "Numero_De_Prueba": "1"
+    }
+    ]
+}

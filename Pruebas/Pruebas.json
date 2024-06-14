@@ -1,0 +1,74 @@
+{
+    "Pruebas": [
+      {
+        "TipoDeTrama": "Ejemplo 1",
+        "RegistroDeInicio": "Inicio 1",
+        "NuevoValorDelRegistro": "Valor 1",
+        "RespuestaEsperada": "Respuesta 1",
+        "NumeroDePrueba": 1
+      },
+      {
+        "TipoDeTrama": "Ejemplo 2",
+        "RegistroDeInicio": "Inicio 2",
+        "NuevoValorDelRegistro": "Valor 2",
+        "RespuestaEsperada": "Respuesta 2",
+        "NumeroDePrueba": 2
+      },
+      {
+        "TipoDeTrama": "Ejemplo 3",
+        "RegistroDeInicio": "Inicio 3",
+        "NuevoValorDelRegistro": "Valor 3",
+        "RespuestaEsperada": "Respuesta 3",
+        "NumeroDePrueba": 3
+      },
+      {
+        "TipoDeTrama": "Ejemplo 4",
+        "RegistroDeInicio": "Inicio 4",
+        "NuevoValorDelRegistro": "Valor 4",
+        "RespuestaEsperada": "Respuesta 4",
+        "NumeroDePrueba": 4
+      },
+      {
+        "TipoDeTrama": "Ejemplo 5",
+        "RegistroDeInicio": "Inicio 5",
+        "NuevoValorDelRegistro": "Valor 5",
+        "RespuestaEsperada": "Respuesta 5",
+        "NumeroDePrueba": 5
+      },
+      {
+        "TipoDeTrama": "Ejemplo 6",
+        "RegistroDeInicio": "Inicio 6",
+        "NuevoValorDelRegistro": "Valor 6",
+        "RespuestaEsperada": "Respuesta 6",
+        "NumeroDePrueba": 6
+      },
+      {
+        "TipoDeTrama": "Ejemplo 7",
+        "RegistroDeInicio": "Inicio 7",
+        "NuevoValorDelRegistro": "Valor 7",
+        "RespuestaEsperada": "Respuesta 7",
+        "NumeroDePrueba": 7
+      },
+      {
+        "TipoDeTrama": "Ejemplo 8",
+        "RegistroDeInicio": "Inicio 8",
+        "NuevoValorDelRegistro": "Valor 8",
+        "RespuestaEsperada": "Respuesta 8",
+        "NumeroDePrueba": 8
+      },
+      {
+        "TipoDeTrama": "Ejemplo 9",
+        "RegistroDeInicio": "Inicio 9",
+        "NuevoValorDelRegistro": "Valor 9",
+        "RespuestaEsperada": "Respuesta 9",
+        "NumeroDePrueba": 9
+      },
+      {
+        "TipoDeTrama": "Ejemplo 10",
+        "RegistroDeInicio": "Inicio 10",
+        "NuevoValorDelRegistro": "Valor 10",
+        "RespuestaEsperada": "Respuesta 10",
+        "NumeroDePrueba": 10
+      }
+    ]
+  }
