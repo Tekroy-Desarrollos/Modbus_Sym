@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import ttk, messagebox
+from tkinter import ttk, messagebox, filedialog
 from Serial_Client import SerialClient  # Asegúrate de tener SerialClient definido correctamente
 import serial.tools.list_ports as list_ports 
 import sys
@@ -40,6 +40,11 @@ class App:
         
         # Función para actualizar baudrate cuando se seleccione uno nuevo
         self.baudrate_combobox.bind("<<ComboboxSelected>>", self.update_baudrate)
+        
+        
+        self.Seleccionar_Archivo = ttk.Button(root, text="Seleccionar Archivo", command=self.open_file)
+        self.Seleccionar_Archivo.grid(row=5, column=0, columnspan=2, padx=10, pady=10, sticky='ew')
+        
         
         self.center_window()
 
@@ -99,7 +104,14 @@ class App:
         # Aquí puedes llamar a la función que inicia tu prueba
         # Por ejemplo, si tienes una función llamada "run_test" en Serial_Client.py
         # solo debes hacer:
-        
+    
+    def open_file(self):
+        file_path = filedialog.askopenfilename()
+        print(file_path)
+        # Aquí puedes hacer lo que necesites con la ruta del archivo seleccionado
+        # Por ejemplo, si necesitas enviar el archivo a través del puerto serie
+        # solo debes hacer:
+        # self.serial_client.send_file(file_path)
 
 if __name__ == "__main__":
     root = tk.Tk()
