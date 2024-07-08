@@ -130,9 +130,9 @@
             "Slave_Address": "0x01",
             "Function_code": "0x03",
             "Starting_address": "0x0000",
-            "Quantity": "N/A",
-            "CRC_MSB": "N/A",
-            "CRC_LSB": "N/A",
+            "Quantity": "0x0000",
+            "CRC_MSB": "0x00",
+            "CRC_LSB": "0x00",
             "Number_Test": "15"
         },
         {

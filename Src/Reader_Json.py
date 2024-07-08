@@ -1,5 +1,6 @@
 import json
 import os
+import Data_Transformer as func
 
 class ReaderJson:
     def __init__(self, file_path=None):
@@ -18,15 +19,24 @@ class ReaderJson:
             messages = []
 
             for test in self.data.get("Pruebas", []):
-                message = f"Test {test.get('Number_Test', 'N/A')}: "
-                message += f"Slave_Address: {test.get('Slave_Address', 'N/A')}, "
-                message += f"Function_Code: {test.get('Function_code', 'N/A')}, "
-                message += f"Starting_Address: {test.get('Starting_address', 'N/A')}, "
-                message += f"Quantity: {test.get('Quantity', 'N/A')}, "
-                message += f"CRC_MSB: {test.get('CRC_MSB', 'N/A')}, "
-                message += f"CRC_LSB: {test.get('CRC_LSB', 'N/A')}"
-                messages.append(message)
-                print (message)
+                message = []
+
+                # Obtener los campos del JSON
+                try:
+                    slave_address = func.hexadecimal_string_to_int(test.get('Slave_Address'))
+                    function_code = func.hexadecimal_string_to_int(test.get('Function_code'))
+                    starting = func.hex_string_to_array(test.get('Starting_address'))
+                    quantity = func.hex_string_to_array(test.get('Quantity'))
+
+                    message.extend([slave_address, function_code])
+                    message.extend(starting)
+                    message.extend(quantity)
+                    message.extend([func.hexadecimal_string_to_int(test.get('CRC_MSB')), func.hexadecimal_string_to_int(test.get('CRC_LSB'))])
+
+                    messages.append(message)
+
+                except ValueError as e:
+                    print(f"Error procesando prueba {test.get('Number_Test')}: {e}")
 
             return messages
 
