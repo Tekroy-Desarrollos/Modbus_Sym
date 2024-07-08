@@ -19,7 +19,7 @@ Este proyecto es un simulador de dispositivo ModBus RTU Master desarrollado en P
 
 1. Clona el repositorio:
     ```bash
-    git clone https://github.com/tu-usuario/tu-repositorio.git
+    git clone git@github.com:Tekroy-Desarrollos/Modbus_Sym.git
     cd tu-repositorio
     ```
 
