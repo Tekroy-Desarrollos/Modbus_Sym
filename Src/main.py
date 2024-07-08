@@ -6,8 +6,11 @@ import serial.tools.list_ports as list_ports
 import sys
 import glob
 
+# Crear una instancia de SerialClient
+client = SerialClient(port='/dev/ttyUSB0', baudrate=9600)
 class App:
     def __init__(self, root):
+
         self.root = root
         self.root.title("Modbus Client")
 
@@ -115,10 +118,11 @@ class App:
             # Por ejemplo, si tienes una función llamada "run_test" en Serial_Client.py
             # solo debes hacer:
             print("Iniciando Prueba")
-            
+
             self.reader.set_file_path(self.File_path)
             self.reader.read_json()
-            # self.serial_client.run_test()
+            self.serial_client.run_test()
+
         else:
             messagebox.showwarning("Advertencia", "Por favor, selecciona un archivo antes de iniciar la prueba.")
 

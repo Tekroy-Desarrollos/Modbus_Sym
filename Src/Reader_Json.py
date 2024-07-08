@@ -15,23 +15,20 @@ class ReaderJson:
 
         with open(self.file_path, 'r') as file:
             self.data = json.load(file)
-            pruebas = self.data.get("Pruebas", [])
+            messages = []
 
-            for prueba in pruebas:
-                # Resto del código para procesar el JSON
-                tipo_de_trama = prueba.get("TipoDeTrama")
-                registro_de_inicio = prueba.get("RegistroDeInicio")
-                nuevo_valor_del_registro = prueba.get("NuevoValorDelRegistro")
-                respuesta_esperada = prueba.get("RespuestaEsperada")
-                numero_de_prueba = prueba.get("NumeroDePrueba")
+            for test in self.data.get("Pruebas", []):
+                message = f"Test {test.get('Number_Test', 'N/A')}: "
+                message += f"Slave_Address: {test.get('Slave_Address', 'N/A')}, "
+                message += f"Function_Code: {test.get('Function_code', 'N/A')}, "
+                message += f"Starting_Address: {test.get('Starting_address', 'N/A')}, "
+                message += f"Quantity: {test.get('Quantity', 'N/A')}, "
+                message += f"CRC_MSB: {test.get('CRC_MSB', 'N/A')}, "
+                message += f"CRC_LSB: {test.get('CRC_LSB', 'N/A')}"
+                messages.append(message)
+                print (message)
 
-                # Imprimir los valores para verificar
-                print(f"Prueba {numero_de_prueba}:")
-                print("  Tipo de Trama:", tipo_de_trama)
-                print("  Registro de Inicio:", registro_de_inicio)
-                print("  Nuevo Valor del Registro:", nuevo_valor_del_registro)
-                print("  Respuesta Esperada:", respuesta_esperada)
-                print()
+            return messages
 
     def set_file_path(self, file_path):
         self.file_path = file_path
