@@ -1,10 +1,15 @@
 import serial
+import time
 
 class SerialClient:
     def __init__(self, port, baudrate=9600):
         self.port = port
         self.baudrate = baudrate
         self.serial_connection = None
+        self.Timeout = 0.0
+        self.TimeOutFactor = 3.5
+        self.min_bytes = 8
+        self.max_bytes = 255
 
     def connect(self):
         try:
@@ -33,18 +38,43 @@ class SerialClient:
         else:
             print("Error: La conexión serial no está abierta")
 
-    def receive_data(self, num_bytes):
-        if self.serial_connection and self.serial_connection.is_open:
-            try:
-                received_data = self.serial_connection.read(num_bytes)
+def receive_data(self):
+    if self.serial_connection and self.serial_connection.is_open:
+        try:
+            received_data = b''
+            start_time = time.time()
+            while True:
+                if self.serial_connection.in_waiting >= self.min_bytes:
+                    # Leer al menos el mínimo de bytes necesarios
+                    received_data = self.serial_connection.read(self.serial_connection.in_waiting)
+                    break
+                elif time.time() - start_time > self.timeout:
+                    print("Timeout: No se recibieron todos los bytes esperados.")
+                    break
+            
+            if self.min_bytes <= len(received_data) <= self.max_bytes:
                 print(f"Datos recibidos: {received_data}")
                 return received_data
-            except Exception as e:
-                print(f"Error al recibir datos: {e}")
+            else:
+                print("Error: La cantidad de bytes recibidos no está dentro del rango esperado.")
                 return None
-        else:
-            print("Error: La conexión serial no está abierta")
+        
+        except Exception as e:
+            print(f"Error al recibir datos: {e}")
             return None
+    
+    else:
+        print("Error: La conexión serial no está abierta")
+        return None
+
+        
+    def Set_TimeOut(self, BaudRate):
+        self.Timeout = self.TimeOutFactor / BaudRate
+        serial.Timeout = self.Timeout
+        return "Timeout set to: " + str(self.Timeout)
+        
+    def Get_TimeOut(self):
+        return self.Timeout
 
     def run_test(self):
         try:

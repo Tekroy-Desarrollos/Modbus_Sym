@@ -109,8 +109,12 @@ class App:
     # Función para actualizar el baudrate
     def update_baudrate(self, event):
         if self.serial_client:
-            baudrate = int(self.baudrate_combobox.get())
+            baudrate = float(self.baudrate_combobox.get())
+            TimeOutStatus = self.serial_client.Set_TimeOut(baudrate)
             self.serial_client.set_baudrate(baudrate)
+            print(TimeOutStatus)
+        else: 
+            print("Error: No se ha establecido una conexión serial")
 
     # Función para iniciar la prueba
     def init_test(self):
@@ -124,6 +128,9 @@ class App:
             data = self.reader.read_json()
             for i in range(20):
                 self.serial_client.send_data(bytearray(data[i]))
+                self.serial_client.receive_data()
+                
+                
                 time.sleep(0.1)
             self.serial_client.run_test()
 
