@@ -12,7 +12,7 @@ Este proyecto es un simulador de dispositivo ModBus RTU Master desarrollado en P
 ## Requisitos
 
 - Python 3.x
-- tkinter
+- custontkinter
 - pyserial
 
 ## Instalación
