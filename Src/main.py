@@ -5,6 +5,7 @@ from Reader_Json import ReaderJson
 import serial.tools.list_ports as list_ports
 import sys
 import glob
+import time as time
 
 # Crear una instancia de SerialClient
 client = SerialClient(port='/dev/ttyUSB0', baudrate=9600)
@@ -121,7 +122,9 @@ class App:
 
             self.reader.set_file_path(self.File_path)
             data = self.reader.read_json()
-            self.serial_client.send_data(data[0])
+            for i in range(20):
+                self.serial_client.send_data(bytearray(data[i]))
+                time.sleep(0.1)
             self.serial_client.run_test()
 
         else:
