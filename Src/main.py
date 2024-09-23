@@ -56,6 +56,9 @@ class App:
 
         self.center_window()
         self.make_responsive()
+        
+        self.no_response_count = 0  # Contador de respuestas no recibidas
+        self.timeout = 2  # Tiempo de espera para la respuesta en segundos (puedes ajustar este valor)
 
     # Función para centrar la ventana en la pantalla
     def center_window(self):
@@ -127,11 +130,40 @@ class App:
             print("Iniciando Prueba")
             self.reader.set_file_path(self.File_path)
             data = self.reader.read_json()
-            for i in range(20):
+
+            for i in range(len(data)):
                 self.serial_client.send_data(bytearray(data[i]))
                 time.sleep(0.1)
+
+                # Esperar una respuesta del dispositivo
+                if not self.wait_for_response():
+                    self.no_response_count += 1
+                    print(f"Prueba {i + 1}: No hubo respuesta")
+                else:
+                    print(f"Prueba {i + 1}: Respuesta recibida")
+
+            messagebox.showinfo("Prueba finalizada", f"Total de pruebas sin respuesta: {self.no_response_count}")
+
         else:
             messagebox.showwarning("Advertencia", "Por favor, selecciona un archivo antes de iniciar la prueba.")
+
+    # Función para esperar la respuesta del dispositivo
+    def wait_for_response(self):
+        """
+        Espera una respuesta del dispositivo dentro del tiempo de espera (timeout).
+        Devuelve True si se recibe una respuesta, False si no.
+        """
+        start_time = time.time()
+        
+        while (time.time() - start_time) < self.timeout:
+            response = self.serial_client.read_data()  # Método que lee la respuesta del dispositivo
+            if response:
+                print(f"Respuesta: {response}")
+                return True
+            time.sleep(0.1)  # Pausa pequeña para evitar sobrecargar la CPU
+        
+        # No se recibió respuesta en el tiempo límite
+        return False
 
     # Función para abrir un archivo
     def open_file(self):
