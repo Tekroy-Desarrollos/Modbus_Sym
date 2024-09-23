@@ -1,5 +1,5 @@
-import customtkinter as ctk
-from tkinter import messagebox, filedialog  # Importar messagebox y filedialog desde tkinter
+import tkinter as tk
+from tkinter import messagebox, filedialog, ttk  # Importar messagebox, filedialog y ttk para Combobox
 from Serial_Client import SerialClient  # Asegúrate de tener SerialClient definido correctamente
 from Reader_Json import ReaderJson
 import serial.tools.list_ports as list_ports
@@ -15,10 +15,6 @@ class App:
         self.root = root
         self.root.title("Modbus Client")
 
-        # Configurar el tema de CustomTkinter
-        ctk.set_appearance_mode("light")  # Modo oscuro o claro basado en el sistema
-        ctk.set_default_color_theme("blue")  # Tema de color predeterminado
-
         # Inicializar el lector de JSON con la ruta del archivo aún no especificada
         self.reader = ReaderJson()
 
@@ -27,32 +23,32 @@ class App:
         self.File_path = None
 
         # Crear la interfaz gráfica del selector de puerto
-        self.port_label = ctk.CTkLabel(root, text="Puerto:")
+        self.port_label = tk.Label(root, text="Puerto:")
         self.port_label.grid(row=0, column=0, padx=10, pady=5, sticky='w')
-        self.port_combobox = ctk.CTkComboBox(root)
+        self.port_combobox = ttk.Combobox(root)
         self.port_combobox.grid(row=0, column=1, padx=10, pady=5, sticky='ew')
 
         # Crear la interfaz gráfica del selector de baudrate
-        self.baudrate_label = ctk.CTkLabel(root, text="Baudrate:")
+        self.baudrate_label = tk.Label(root, text="Baudrate:")
         self.baudrate_label.grid(row=1, column=0, padx=10, pady=5, sticky='w')
-        self.baudrate_combobox = ctk.CTkComboBox(root, values=["9600", "19200", "38400", "57600", "115200"])
+        self.baudrate_combobox = ttk.Combobox(root, values=["9600", "19200", "38400", "57600", "115200"])
         self.baudrate_combobox.grid(row=1, column=1, padx=10, pady=5, sticky='ew')
         self.baudrate_combobox.set("9600")  # Establecer el baudrate inicial
 
         # Botón para buscar puertos
-        self.scan_button = ctk.CTkButton(root, text="Buscar Puertos", command=self.scan_ports)
+        self.scan_button = tk.Button(root, text="Buscar Puertos", command=self.scan_ports)
         self.scan_button.grid(row=2, column=0, columnspan=2, padx=10, pady=10, sticky='ew')
 
         # Botón para conectar
-        self.connect_button = ctk.CTkButton(root, text="Conectar", command=self.connect)
+        self.connect_button = tk.Button(root, text="Conectar", command=self.connect)
         self.connect_button.grid(row=3, column=0, columnspan=2, padx=10, pady=10, sticky='ew')
 
         # Botón para seleccionar archivo
-        self.Seleccionar_Archivo = ctk.CTkButton(root, text="Seleccionar Archivo", command=self.open_file)
+        self.Seleccionar_Archivo = tk.Button(root, text="Seleccionar Archivo", command=self.open_file)
         self.Seleccionar_Archivo.grid(row=4, column=0, columnspan=2, padx=10, pady=10, sticky='ew')
 
         # Botón para iniciar la prueba
-        self.button_Init_Test = ctk.CTkButton(root, text="Iniciar Prueba", command=self.init_test)
+        self.button_Init_Test = tk.Button(root, text="Iniciar Prueba", command=self.init_test)
         self.button_Init_Test.grid(row=5, column=0, columnspan=2, padx=10, pady=10, sticky='ew')
 
         # Función para actualizar baudrate cuando se seleccione uno nuevo
@@ -102,7 +98,7 @@ class App:
                 print(f"[{i}] {port}")
 
         # Actualizar los valores del Combobox con los puertos encontrados
-        self.port_combobox.configure(values=self.tty_ports)
+        self.port_combobox['values'] = self.tty_ports
 
     # Función para conectar al puerto seleccionado
     def connect(self):
@@ -128,16 +124,11 @@ class App:
     # Función para iniciar la prueba
     def init_test(self):
         if self.File_path:
-            # Aquí puedes llamar a la función que inicia tu prueba
-            # Por ejemplo, si tienes una función llamada "run_test" en Serial_Client.py
-            # solo debes hacer:
             print("Iniciando Prueba")
-
             self.reader.set_file_path(self.File_path)
             data = self.reader.read_json()
             for i in range(20):
                 self.serial_client.send_data(bytearray(data[i]))
-                
                 time.sleep(0.1)
         else:
             messagebox.showwarning("Advertencia", "Por favor, selecciona un archivo antes de iniciar la prueba.")
@@ -148,6 +139,6 @@ class App:
         print(self.File_path)  # Imprime la ruta del archivo seleccionado
 
 if __name__ == "__main__":
-    root = ctk.CTk()
+    root = tk.Tk()
     app = App(root)
     root.mainloop()
