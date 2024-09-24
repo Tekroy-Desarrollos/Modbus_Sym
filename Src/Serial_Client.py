@@ -37,6 +37,7 @@ class SerialClient:
                 print(f"Error al enviar datos: {e}")
         else:
             print("Error: La conexión serial no está abierta")
+            return "Error: La conexión serial no está abierta"
 
     def receive_data(self):
         """
@@ -71,6 +72,21 @@ class SerialClient:
                 print(f"Error al recibir datos: {e}")
                 return None
 
+        else:
+            print("Error: La conexión serial no está abierta")
+            return None
+    def read_data(self):
+        """
+        Método para leer los datos recibidos desde el puerto serial.
+        """
+        if self.serial_connection and self.serial_connection.is_open:
+            try:
+                received_data = self.serial_connection.read(self.serial_connection.in_waiting)
+                print(f"Datos recibidos: {received_data}")
+                return received_data
+            except Exception as e:
+                print(f"Error al leer datos: {e}")
+                return None
         else:
             print("Error: La conexión serial no está abierta")
             return None

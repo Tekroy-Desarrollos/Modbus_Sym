@@ -51,3 +51,53 @@ class ReaderJson:
         except ValueError as e:
             print(f"Error procesando prueba {test.get('Number_Test', 'Desconocido')}: {e}")
             return []
+        
+    def JsonCreate(self, nombre_archivo: str):
+        """
+        Crea un archivo JSON en la carpeta 'src' y guarda la ruta en self.file_path.
+        """
+        # Obtener la ruta absoluta de la carpeta 'src'
+        src_directory = os.path.join(os.getcwd(), 'src')
+        
+        # Asegurarse de que la carpeta 'src' existe
+        if not os.path.exists(src_directory):
+            os.makedirs(src_directory)
+
+        # Crear la ruta completa para el archivo JSON
+        self.file_path = os.path.join(src_directory, nombre_archivo)
+
+        # Crear el archivo JSON con un diccionario vacío o los datos que prefieras
+        datos = {}  # Puede ser cualquier diccionario de datos
+        with open(self.file_path, 'w') as file:
+            json.dump(datos, file, indent=4)
+            print(f"Archivo JSON creado en: {self.file_path}")
+
+    def add_test_parameters(self, numero_de_prueba: int, mensaje_enviado: list, mensaje_recibido: list):
+        """
+        Agrega nuevos parámetros (Mensaje_Enviado, Mensaje_Recibido, Numero_De_Prueba)
+        a una lista de pruebas en el archivo JSON.
+        """
+        self._validate_file()
+
+        # Cargar el archivo JSON existente
+        with open(self.file_path, 'r') as file:
+            data = json.load(file)
+
+        # Crear nueva prueba
+        nueva_prueba = {
+            "Numero_De_Prueba": numero_de_prueba,
+            "Mensaje_Enviado": mensaje_enviado,
+            "Mensaje_Recibido": mensaje_recibido
+        }
+
+        # Verificar si existe la clave "Pruebas" en el archivo JSON, si no, crearla
+        if "Pruebas" not in data:
+            data["Pruebas"] = []
+
+        # Agregar la nueva prueba a la lista de pruebas
+        data["Pruebas"].append(nueva_prueba)
+
+        # Guardar los cambios en el archivo JSON
+        with open(self.file_path, 'w') as file:
+            json.dump(data, file, indent=4)
+            print(f"Nueva prueba agregada a: {self.file_path}")

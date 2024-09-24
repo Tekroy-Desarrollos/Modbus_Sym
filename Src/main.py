@@ -21,6 +21,7 @@ class App:
         # Variables de uso general
         self.serial_client = None
         self.File_path = None
+        self.response = None
 
         # Crear la interfaz gráfica del selector de puerto
         self.port_label = tk.Label(root, text="Puerto:")
@@ -126,26 +127,38 @@ class App:
 
     # Función para iniciar la prueba
     def init_test(self):
+        statusflag = False
         if self.File_path:
             print("Iniciando Prueba")
             self.reader.set_file_path(self.File_path)
             data = self.reader.read_json()
 
             for i in range(len(data)):
-                self.serial_client.send_data(bytearray(data[i]))
+                self.response = self.serial_client.send_data(bytearray(data[i]))
                 time.sleep(0.1)
 
                 # Esperar una respuesta del dispositivo
+                if self.response == "Error: La conexión serial no está abierta":
+                    statusflag = True
+                    break
                 if not self.wait_for_response():
+                    self.serial_client.disconnect()
                     self.no_response_count += 1
                     print(f"Prueba {i + 1}: No hubo respuesta")
                 else:
                     print(f"Prueba {i + 1}: Respuesta recibida")
 
+            
+        if statusflag == False:
             messagebox.showinfo("Prueba finalizada", f"Total de pruebas sin respuesta: {self.no_response_count}")
-
+        if statusflag:
+            messagebox.showerror("Error", "Error al enviar datos al dispositivo")
         else:
             messagebox.showwarning("Advertencia", "Por favor, selecciona un archivo antes de iniciar la prueba.")
+        self.File_path = None
+        self.response = None
+        self.no_response_count = 0
+        
 
     # Función para esperar la respuesta del dispositivo
     def wait_for_response(self):
@@ -156,9 +169,13 @@ class App:
         start_time = time.time()
         
         while (time.time() - start_time) < self.timeout:
-            response = self.serial_client.read_data()  # Método que lee la respuesta del dispositivo
-            if response:
-                print(f"Respuesta: {response}")
+            self.response = self.serial_client.read_data()  # Método que lee la respuesta del dispositivo
+            
+            if self.response:
+                print(f"Respuesta: {self.response}")
+                if(self.response == "[Errno 5] Input/output error"):
+                    break
+                
                 return True
             time.sleep(0.1)  # Pausa pequeña para evitar sobrecargar la CPU
         
