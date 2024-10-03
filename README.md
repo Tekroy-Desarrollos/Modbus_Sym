@@ -12,7 +12,7 @@ Este proyecto es un simulador de dispositivo ModBus RTU Master desarrollado en P
 ## Requisitos
 
 - Python 3.x
-- customtkinter
+- Tkinter
 - pyserial
 
 ## Instalación
@@ -23,9 +23,15 @@ Este proyecto es un simulador de dispositivo ModBus RTU Master desarrollado en P
     cd Modbus_Sym
     ```
 
-2. Instala las dependencias:
+2. Instala las dependencias en Ubuntu:
+
+    
     ```bash
     pip install pyserial
+    ```
+    
+    ```bash
+    sudo apt install python3-tk
     ```
 
 ## Uso
@@ -42,7 +48,13 @@ Este proyecto es un simulador de dispositivo ModBus RTU Master desarrollado en P
     - Selecciona un archivo JSON haciendo clic en "Seleccionar Archivo".
     - Inicia la prueba haciendo clic en "Iniciar Prueba".
 
-## Ejemplos de Archivos JSON
+## Uso de archivo de prueba
+
+Dentro de la carpeta pruebas podra ver que existe una carpeta llamada prubeas,
+en esa carpeta se encuentra un archivo Json, la estructura de ese archivo es 
+similar al ejemplo que se encuentra mas abajo.
+
+para poder realizar cualquier prueba uno debe configurar un archivo Json con la extructura:
 
 ```json
 {
@@ -58,4 +70,53 @@ Este proyecto es un simulador de dispositivo ModBus RTU Master desarrollado en P
         }
     ]
 }
+```
+para entender que significa cada elemento se deja la siguiente columna:
+
+| Items            | Descripcion |
+|------------------|-----------|
+| Slave_Address    | Id del dispositivo esclavo    |
+| Function_Code    | Codigo de funcion Modbus      |
+| Starting_Address | valor del registro a modificar   |
+| Quantity         | Registro a ser modificado     |
+| CRC_MSB          | par de bit mas significativos del CRC   |
+| CRC_LSB          | Par de bit menos significativos del CRC |
+| NUmber_Test      | Numero de prueba actual a realizarse    |
+
+
+Un ejemplo de configuracion puede ser el siguiente.
+
+Suponiendo que el esclavo modbus tiene ID 1 (0x01), que el codigo de funcion
+sera el 6 (0x06) (Write Single Register), el valor del registro sera 1000 (0x03E8)
+el registro a modificar sera el 10 (0x000A) y el CRC es 35261 (0x89DB).
+
+Quedaria segun la tabla anterior dividido de la siguiente forma
+| Items            | Valor |
+|------------------|-------|
+| Slave_Address    | 0x01" |
+| Function_Code    | 0x06  |
+| Starting_Address | 0x03E8|
+| Quantity         | 0x000A|
+| CRC_MSB          | 0x89  |
+| CRC_LSB          | 0xDB  |
+| NUmber_Test      | 2     |
+
+Ahora traspasando esto al formato del Json quedaria de la siguiente forma
+
+```json
+{
+    "Pruebas": [
+        {
+            "Slave_Address": "0x01",
+            "Function_code": "0x06",
+            "Starting_address": "0x03E8",
+            "Quantity": "0x000A",
+            "CRC_MSB": "0x89",
+            "CRC_LSB": "0xDB",
+            "Number_Test": 1
+        }
+    ]
+}
+```
+
 

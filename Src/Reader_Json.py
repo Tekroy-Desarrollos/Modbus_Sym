@@ -72,7 +72,7 @@ class ReaderJson:
             json.dump(datos, file, indent=4)
             print(f"Archivo JSON creado en: {self.file_path}")
 
-    def add_test_parameters(self, numero_de_prueba: int, mensaje_enviado: list, mensaje_recibido: list):
+    def Json_Reported_Data(self, numero_de_prueba: int, mensaje_enviado: list, mensaje_recibido: list):
         """
         Agrega nuevos parámetros (Mensaje_Enviado, Mensaje_Recibido, Numero_De_Prueba)
         a una lista de pruebas en el archivo JSON.
