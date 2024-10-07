@@ -6,8 +6,8 @@ class SerialClient:
         self.port = port
         self.baudrate = baudrate
         self.serial_connection = None
-        self.timeout = 0.0  # Tiempo de espera para la respuesta
-        self.TimeOutFactor = 3.5  # Factor usado para calcular el timeout basado en el baudrate
+        self.timeout = 100  # Tiempo de espera para la respuesta
+        self.TimeOutFactor = 50  # Factor usado para calcular el timeout basado en el baudrate
         self.min_bytes = 8  # Mínimo número de bytes esperados
         self.max_bytes = 255  # Máximo número de bytes esperados
 
@@ -62,7 +62,6 @@ class SerialClient:
                         break
 
                 if self.min_bytes <= len(received_data) <= self.max_bytes:
-                    print(f"Datos recibidos: {received_data}")
                     return received_data
                 else:
                     print("Error: La cantidad de bytes recibidos no está dentro del rango esperado.")
@@ -82,7 +81,6 @@ class SerialClient:
         if self.serial_connection and self.serial_connection.is_open:
             try:
                 received_data = self.serial_connection.read(self.serial_connection.in_waiting)
-                print(f"Datos recibidos: {received_data}")
                 return received_data
             except Exception as e:
                 print(f"Error al leer datos: {e}")
@@ -90,3 +88,10 @@ class SerialClient:
         else:
             print("Error: La conexión serial no está abierta")
             return None
+    def Set_TimeOut(self, baudrate):
+        """
+        Método para establecer el tiempo de espera (timeout) en función del baudrate.
+        """
+        self.baudrate = baudrate
+        self.timeout = self.TimeOutFactor * (self.min_bytes * 10) / self.baudrate
+        return self.timeout

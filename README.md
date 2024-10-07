@@ -93,7 +93,7 @@ el registro a modificar sera el 10 (0x000A) y el CRC es 35261 (0x89DB).
 Quedaria segun la tabla anterior dividido de la siguiente forma
 | Items            | Valor |
 |------------------|-------|
-| Slave_Address    | 0x01" |
+| Slave_Address    | 0x01 |
 | Function_Code    | 0x06  |
 | Starting_Address | 0x03E8|
 | Quantity         | 0x000A|

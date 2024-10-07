@@ -6,12 +6,14 @@ import serial.tools.list_ports as list_ports
 import sys
 import glob
 import time
+import modbus_Decoder as ModbusDecoder
 
 # Crear una instancia de SerialClient
 client = SerialClient(port='/dev/ttyUSB0', baudrate=9600)
 
 class App:
     def __init__(self, root):
+        self.ModbusDecoder = ModbusDecoder.ModbusDecoder()
         self.root = root
         self.root.title("Modbus Client")
 
@@ -22,6 +24,7 @@ class App:
         self.serial_client = None
         self.File_path = None
         self.response = None
+        self.ResponseDecoderModbus = None
 
         # Crear la interfaz gráfica del selector de puerto
         self.port_label = tk.Label(root, text="Puerto:")
@@ -127,6 +130,8 @@ class App:
 
     # Función para iniciar la prueba
     def init_test(self):
+        #self.timeout = self.serial_client.Set_TimeOut(float(self.baudrate_combobox.get()))
+        self.timeout = 2
         statusflag = False
         if self.File_path:
             print("Iniciando Prueba")
@@ -147,6 +152,9 @@ class App:
                     print(f"Prueba {i + 1}: No hubo respuesta")
                 else:
                     print(f"Prueba {i + 1}: Respuesta recibida")
+                    self.ResponseDecoderModbus = self.ModbusDecoder.decode(self.response)
+                    print(f"Respuesta decodificada: {self.ResponseDecoderModbus}")
+                print("--------------------------------------------------")
 
             
         if statusflag == False:
@@ -155,8 +163,6 @@ class App:
             messagebox.showerror("Error", "Error al enviar datos al dispositivo")
         else:
             messagebox.showwarning("Advertencia", "Por favor, selecciona un archivo antes de iniciar la prueba.")
-        self.File_path = None
-        self.response = None
         self.no_response_count = 0
         
 
