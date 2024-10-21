@@ -145,9 +145,8 @@ class App:
                 # Esperar una respuesta del dispositivo
                 if self.response == "Error: La conexión serial no está abierta":
                     statusflag = True
-                    break
+                    return False
                 if not self.wait_for_response():
-                    self.serial_client.disconnect()
                     self.no_response_count += 1
                     print(f"Prueba {i + 1}: No hubo respuesta")
                 else:
@@ -155,6 +154,7 @@ class App:
                     self.ResponseDecoderModbus = self.ModbusDecoder.decode(self.response)
                     print(f"Respuesta decodificada: {self.ResponseDecoderModbus}")
                 print("--------------------------------------------------")
+                time.sleep(1)
 
             
         if statusflag == False:

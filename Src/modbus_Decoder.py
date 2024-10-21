@@ -1,5 +1,7 @@
 import struct
 import CRC as crc
+
+
 class ModbusDecoder:
     def __init__(self):
         pass
@@ -23,26 +25,33 @@ class ModbusDecoder:
             raise ValueError("Error de CRC: esperado {}, recibido {}".format(crc_calculated, crc_received))
         
         # Decodificar en base al código de función
-        if function_code == 3:  # Lectura de registros
-            print("Decodificando lectura de registros")
-            return self.decode_read_holding_registers(data)
-        
-        elif function_code == 16:  # Escritura múltiple de registros
-            print("Decodificando escritura múltiple de registros")
-            return self.decode_write_multiple_registers(data)
-        
-        elif function_code == 6:  # Escritura de un solo registro
-            print("Decodificando escritura de un solo registro")
-            return self.decode_write_single_register(data)
-        
-        elif function_code == 4:  # Lectura de registros de entrada
-            print("Decodificando lectura de registros de entrada")
-            return self.decode_read_input_registers(data)
-        
-        else:
-            print("Error: Código de función no soportado")
-            raise ValueError("Código de función no soportado: {}".format(function_code))
+        match function_code:
+            case 3:  # Lectura de registros
+                print("Decodificando lectura de registros")
+                return self.decode_read_holding_registers(data)
+            case 16:  # Escritura múltiple de registros
+                print("Decodificando escritura múltiple de registros")
+                return self.decode_write_multiple_registers(data)
+            case 6:  # Escritura de un solo registro
+                print("Decodificando escritura de un solo registro")
+                return self.decode_write_single_register(data)
+            case 4:  # Lectura de registros de entrada
+                print("Decodificando lectura de registros de entrada")
+                return self.decode_read_input_registers(data)
+            
+            case _:  # Código de función no soportado
+                print("Decodificando mensaje de error")
+                return self.Decode_Error_Message(frame)
 
+
+    def Decode_Error_Message(self,data):
+        """Decodifica un mensaje de error"""
+        error_code = data[1]
+        return {
+            'data': data.hex(' '),  # Datos en formato hexadecimal legible
+            'error_code': f"0x{error_code:02X}"  # Código de error en formato hexadecimal
+    }
+        
     def decode_read_holding_registers(self, data):
         """Decodifica la respuesta de lectura de registros (función 3)"""
         byte_count = data[0]
@@ -82,17 +91,6 @@ class ModbusDecoder:
             'function': 4,
             'registers': registers
         }
+        
 
-# # Ejemplo de uso
-# if __name__ == "__main__":
-#     decoder = ModbusDecoder()
 
-#     # Trama Modbus RTU simulada: Dirección 0x01, Función 0x03 (Leer Holding Registers)
-#     # Trama: [0x01, 0x03, 0x04, 0x00, 0x0A, 0x00, 0x0B, CRC]
-#     frame = bytearray([0x01, 0x06, 0x00, 0x0A, 0x03, 0xE8, 0xA9, 0x76])
-
-#     try:
-#         result = decoder.decode(frame)
-#         print("Decodificación exitosa:", result)
-#     except ValueError as e:
-#         print("Error al decodificar la trama:", e)

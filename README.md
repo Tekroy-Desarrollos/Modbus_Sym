@@ -20,6 +20,7 @@ Este proyecto es un simulador de dispositivo ModBus RTU Master desarrollado en P
 1. Clona el repositorio:
     ```bash
     git clone git@github.com:Tekroy-Desarrollos/Modbus_Sym.git
+
     cd Modbus_Sym
     ```
 
@@ -34,18 +35,20 @@ Este proyecto es un simulador de dispositivo ModBus RTU Master desarrollado en P
     sudo apt install python3-tk
     ```
 
-## Uso
+## Uso en Ubuntu/Pop_Os!
+1. Ingrese a la carpeta principal llamada Src
 
-1. Ejecuta el archivo principal:
+2. Ejecuta el archivo principal con la siguiente linea:
+
     ```bash
-    python main.py
+    python3 main.py
     ```
 
-2. En la interfaz gráfica:
-    - Selecciona el puerto serial y el baudrate.
-    - Haz clic en "Buscar Puertos" para listar los puertos disponibles.
-    - Selecciona un puerto de la lista y haz clic en "Conectar".
-    - Selecciona un archivo JSON haciendo clic en "Seleccionar Archivo".
+3. En la interfaz gráfica:
+    - Presione el boton "Buscar Puertos".
+    - Selecciona el puerto serial y el baudrate del dispositivo esclavo.
+    - Presione el boton "Conectar" para establecer la comunicacion Serial con el dispositivo.
+    - Selecciona un archivo JSON haciendo clic en "Seleccionar Archivo"E.
     - Inicia la prueba haciendo clic en "Iniciar Prueba".
 
 ## Uso de archivo de prueba

@@ -84,9 +84,11 @@ class SerialClient:
                 return received_data
             except Exception as e:
                 print(f"Error al leer datos: {e}")
+                self.disconnect()
                 return None
         else:
             print("Error: La conexión serial no está abierta")
+            self.disconnect()
             return None
     def Set_TimeOut(self, baudrate):
         """

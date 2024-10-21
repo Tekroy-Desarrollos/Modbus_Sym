@@ -1,1 +1,5 @@
 __pycache__/
+Src/__pycache__/
+Src/test.py
+.vscode/
+.gitignore
