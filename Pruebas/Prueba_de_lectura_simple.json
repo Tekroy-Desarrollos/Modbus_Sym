@@ -1,0 +1,130 @@
+{
+    "Pruebas": [
+        {
+            "Slave_Address": "0x01",
+            "Function_code": "0x04",
+            "Starting_address": "0x0000",
+            "Quantity": "0x0001",
+            "CRC_MSB": "0x31",
+            "CRC_LSB": "0xCA",
+            "Number_Test": "1"
+        },
+        {
+            "Slave_Address": "0x01",
+            "Function_code": "0x04",
+            "Starting_address": "0x0001",
+            "Quantity": "0x0001",
+            "CRC_MSB": "0x60",
+            "CRC_LSB": "0x0A",
+            "Number_Test": "2"
+        },
+        {
+            "Slave_Address": "0x01",
+            "Function_code": "0x04",
+            "Starting_address": "0x0002",
+            "Quantity": "0x0001",
+            "CRC_MSB": "0x90",
+            "CRC_LSB": "0x0A",
+            "Number_Test": "3"
+        },
+        {
+            "Slave_Address": "0x01",
+            "Function_code": "0x04",
+            "Starting_address": "0x0003",
+            "Quantity": "0x0001",
+            "CRC_MSB": "0xC1",
+            "CRC_LSB": "0xCA",
+            "Number_Test": "4"
+        },
+        {
+            "Slave_Address": "0x01",
+            "Function_code": "0x04",
+            "Starting_address": "0x0004",
+            "Quantity": "0x0001",
+            "CRC_MSB": "0x70",
+            "CRC_LSB": "0x0B",
+            "Number_Test": "5"
+        },
+        {
+            "Slave_Address": "0x01",
+            "Function_code": "0x04",
+            "Starting_address": "0x0005",
+            "Quantity": "0x0001",
+            "CRC_MSB": "0x21",
+            "CRC_LSB": "0xCB",
+            "Number_Test": "6"
+        },
+        {
+            "Slave_Address": "0x01",
+            "Function_code": "0x04",
+            "Starting_address": "0x0006",
+            "Quantity": "0x0001",
+            "CRC_MSB": "0xD1",
+            "CRC_LSB": "0xCB",
+            "Number_Test": "7"
+        },
+        {
+            "Slave_Address": "0x01",
+            "Function_code": "0x04",
+            "Starting_address": "0x0007",
+            "Quantity": "0x0001",
+            "CRC_MSB": "0x80",
+            "CRC_LSB": "0x0B",
+            "Number_Test": "8"
+        },
+        {
+            "Slave_Address": "0x01",
+            "Function_code": "0x04",
+            "Starting_address": "0x0008",
+            "Quantity": "0x0001",
+            "CRC_MSB": "0xB0",
+            "CRC_LSB": "0x08",
+            "Number_Test": "9"
+        },
+        {
+            "Slave_Address": "0x01",
+            "Function_code": "0x04",
+            "Starting_address": "0x0009",
+            "Quantity": "0x0001",
+            "CRC_MSB": "0xE1",
+            "CRC_LSB": "0xC8",
+            "Number_Test": "10"
+        },
+        {
+            "Slave_Address": "0x01",
+            "Function_code": "0x04",
+            "Starting_address": "0x000A",
+            "Quantity": "0x0001",
+            "CRC_MSB": "0x11",
+            "CRC_LSB": "0xC8",
+            "Number_Test": "11"
+        },
+        {
+            "Slave_Address": "0x01",
+            "Function_code": "0x04",
+            "Starting_address": "0x000B",
+            "Quantity": "0x0001",
+            "CRC_MSB": "0x40",
+            "CRC_LSB": "0x08",
+            "Number_Test": "12"
+        },
+        {
+            "Slave_Address": "0x01",
+            "Function_code": "0x04",
+            "Starting_address": "0x000C",
+            "Quantity": "0x0001",
+            "CRC_MSB": "0xF1",
+            "CRC_LSB": "0xC9",
+            "Number_Test": "13"
+        },
+        {
+            "Slave_Address": "0x01",
+            "Function_code": "0x04",
+            "Starting_address": "0x000D",
+            "Quantity": "0x0001",
+            "CRC_MSB": "0xA0",
+            "CRC_LSB": "0x09",
+            "Number_Test": "14"
+        }
+    ]
+}

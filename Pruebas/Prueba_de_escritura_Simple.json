@@ -161,24 +161,6 @@
             "CRC_MSB": "0x60",
             "CRC_LSB": "0x0A",
             "Number_Test": "18"
-        },
-        {
-            "Slave_Address": "0x01",
-            "Function_code": "0x03",
-            "Starting_address": "0x0000",
-            "Quantity": "0x0003",
-            "CRC_MSB": "0x05",
-            "CRC_LSB": "0xCB",
-            "Number_Test": "19"
-        },
-        {
-            "Slave_Address": "0x01",
-            "Function_code": "0x03",
-            "Starting_address": "0x0003",
-            "Quantity": "0x0003",
-            "CRC_MSB": "0xF5",
-            "CRC_LSB": "0xCB",
-            "Number_Test": "20"
         }
     ]
 }

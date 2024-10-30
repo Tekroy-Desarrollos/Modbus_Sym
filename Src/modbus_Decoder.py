@@ -46,7 +46,7 @@ class ModbusDecoder:
 
     def Decode_Error_Message(self,data):
         """Decodifica un mensaje de error"""
-        error_code = data[1]
+        error_code = data[2]
         return {
             'data': data.hex(' '),  # Datos en formato hexadecimal legible
             'error_code': f"0x{error_code:02X}"  # Código de error en formato hexadecimal
