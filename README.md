@@ -24,15 +24,10 @@ Este proyecto es un simulador de dispositivo ModBus RTU Master desarrollado en P
     cd Modbus_Sym
     ```
 
-2. Instala las dependencias en Ubuntu:
-
-    
+2. instalar PyQT6
+    Ejecute el siguiente comando en una terminal para instalar la libreria PyQt6
     ```bash
-    pip install pyserial
-    ```
-    
-    ```bash
-    sudo apt install python3-tk
+    pip install PyQt6
     ```
 
 ## Uso en Ubuntu/Pop_Os!
